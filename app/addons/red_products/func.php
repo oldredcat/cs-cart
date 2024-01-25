@@ -2,6 +2,12 @@
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
+function fn_red_get_products_cron_job()
+{
+    //  получаем массив количества товаров по категориям
+    fn_red_get_product_counts_by_categories(false);
+}
+
 function fn_red_get_products_set_count_products($category_id, $count)
 {
     db_query('UPDATE ?:categories SET product_count = ?i WHERE category_id = ?i', $count, $category_id);
@@ -28,10 +34,14 @@ function fn_red_get_products_count_by_category($category_id)
  *
  * @return  array
  */
-function fn_red_get_product_counts_by_categories()
+function fn_red_get_product_counts_by_categories($cached = true)
 {
-    //  пытаемся взять значения из кэша
-    $categories = \Tygh\Registry::get('red_products_count_by_category');
+    if ($cached) {
+        //  пытаемся взять значения из кэша
+        $categories = \Tygh\Registry::get('red_products_count_by_category');
+    } else {
+        $categories = null;
+    }
 
     //  если не получилось взять из кэша - пересчитываем и сохраняем в кэш
     if (is_null($categories)) {
@@ -70,7 +80,10 @@ function fn_red_get_product_counts_by_categories()
                 fn_red_get_products_set_count_products($category_id, $categories[$category_id]['products_count']);
             }
         }
-        \Tygh\Registry::set('red_products_count_by_category', $categories);
+        
+        if ($cached) {
+            \Tygh\Registry::set('red_products_count_by_category', $categories);
+        }
     }
 
     //  возвращаем массив
