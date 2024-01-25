@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>red_products</id>
+    <name>Товары по категории</name>
+    <version>1.0</version>
+    <status>active</status>
+    <description>Выводит товары с определенной категории включая дочерние категории</description>
+    <authors>
+        <author>
+            <name>RedCat</name>
+            <email>redcat@nxt.ru</email>
+        </author>
+    </authors>
+    <dependencies/>
+    <default_language>ru</default_language>
+    <compatibility>
+        <core_edition>
+            ULTIMATE,MULTIVENDOR
+        </core_edition>
+    </compatibility>
+</addon>
