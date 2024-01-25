@@ -80,7 +80,7 @@ function fn_red_get_product_counts_by_categories($cached = true)
                 fn_red_get_products_set_count_products($category_id, $categories[$category_id]['products_count']);
             }
         }
-        
+
         if ($cached) {
             \Tygh\Registry::set('red_products_count_by_category', $categories);
         }
